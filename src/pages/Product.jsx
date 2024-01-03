@@ -1,5 +1,12 @@
+import PageNav from "../components/PageNav";
+
 function Product() {
-  return <div>Product</div>;
+  return (
+    <div>
+      <h3>Product</h3>
+      <PageNav />
+    </div>
+  );
 }
 
 export default Product;
