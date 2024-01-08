@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Product from "./pages/Product";
 import Homepage from "./pages/Homepage";
 import Pricing from "./pages/Pricing";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
-import { useEffect, useState } from "react";
 import CityList from "./components/CityList";
+import City from "./components/City";
 import CountryList from "./components/CountryList";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             path="city"
             element={<CityList cities={cities} isLoading={isLoading} />}
           />
+          <Route path="city/:id" element={<City />} />
           <Route
             path="country"
             element={<CountryList cities={cities} isLoading={isLoading} />}
