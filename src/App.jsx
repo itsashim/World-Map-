@@ -46,7 +46,10 @@ function App() {
             path="city"
             element={<CityList cities={cities} isLoading={isLoading} />}
           />
-          <Route path="country" element={<CountryList />} />
+          <Route
+            path="country"
+            element={<CountryList cities={cities} isLoading={isLoading} />}
+          />
           <Route path="form" element={<h2>hfasdlfkjsldf</h2>} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
