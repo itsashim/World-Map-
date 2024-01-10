@@ -6,6 +6,7 @@ const CitiesProvider = createContext();
 function CitiesContext({ children }) {
   const [cities, setCitites] = useState([]);
   const [isLoading, setIsLoading] = useState();
+  const [currentCity, setCurrentCity] = useState({});
 
   useEffect(function () {
     const fetchCities = async function () {
@@ -23,8 +24,23 @@ function CitiesContext({ children }) {
     fetchCities();
   }, []);
 
+  async function getCity(id) {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`http://localhost:7000/cities/${id}`);
+      const data = await res.json();
+      setCurrentCity(data);
+    } catch {
+      alert("There was a error loading the date");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <CitiesProvider.Provider value={{ cities, isLoading }}>
+    <CitiesProvider.Provider
+      value={{ cities, isLoading, currentCity, getCity }}
+    >
       {children}
     </CitiesProvider.Provider>
   );
