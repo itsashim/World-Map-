@@ -3,8 +3,12 @@ import Message from "./Message";
 import Spinner from "./Spinner";
 import PropTypes from "prop-types";
 import styles from "./CityList.module.css";
-function CityList({ cities, isLoading }) {
+import { useCities } from "../context/useCities";
+function CityList() {
+  const { cities, isLoading } = useCities();
+
   if (isLoading) return <Spinner />;
+
   if (!cities.length) return <Message message={"Add some Cities"} />;
 
   return (
