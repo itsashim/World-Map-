@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   MapContainer,
   TileLayer,
@@ -13,11 +13,10 @@ import { useEffect, useState } from "react";
 import { useCities } from "../context/useCities";
 import { useGeolocation } from "../Hooks/useGeolocation";
 import PropTypes from "prop-types";
+import { useUrlPosition } from "../Hooks/useUrlPosition";
 
 function Map() {
-  const [searchParams] = useSearchParams();
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
+  const [mapLat, mapLng] = useUrlPosition();
   const {
     isLoading: isLoadingPosition,
     position: getGeolocationPosition,
@@ -95,7 +94,7 @@ function DetectClick() {
   const navigate = useNavigate();
 
   useMapEvents({
-    click: (e) => navigate(`form?lat${e.latlng.lat}&lng${e.latlng.lng}`),
+    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
   });
 }
 
