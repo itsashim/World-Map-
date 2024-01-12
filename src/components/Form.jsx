@@ -20,7 +20,6 @@ const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
 function Form() {
   const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
   const [isLoadingPos, setIsLoadingPos] = useState(false);
@@ -34,6 +33,7 @@ function Form() {
 
   useEffect(
     function () {
+      if (!lat && !lng) return;
       async function fetchUrl() {
         try {
           setIsLoadingPos(true);
@@ -43,7 +43,7 @@ function Form() {
           const data = await res.json();
           if (!data.countryCode)
             throw new Error("Please select the City Location");
-          setCountry(data.countryName);
+
           setCityName(data.city || data.locality || "");
           setEmoji(convertToEmoji(data.countryCode));
           console.log(data);
@@ -59,6 +59,8 @@ function Form() {
     [lat, lng]
   );
   if (isLoadingPos) return <Spinner />;
+
+  if (!lat && !lng) return <Message message="Click the map to add a city" />;
 
   if (geoCodingerr) return <Message message={geoCodingerr} />;
 
