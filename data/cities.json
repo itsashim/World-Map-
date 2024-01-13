@@ -25,28 +25,52 @@
       "id": 17806751
     },
     {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": 98443197
-    },
-    {
-      "cityName": "Fraga",
+      "cityName": "Alcaniz",
       "country": "Spain",
       "emoji": "🇪🇸",
-      "date": "2024-01-12T19:14:30.606Z",
-      "notes": "Jusin sadfalskjdf",
+      "date": "2024-01-13T16:59:40.227Z",
+      "notes": "",
       "position": {
-        "lat": "41.57870247219707",
-        "lng": "0.31567572093906815"
+        "lat": "41.009570412665035",
+        "lng": "-0.06264913117769667"
       },
-      "id": 98443198
+      "id": 73930386
+    },
+    {
+      "cityName": "Alcaniz",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-01-13T16:59:50.384Z",
+      "notes": "",
+      "position": {
+        "lat": "41.01656510359379",
+        "lng": "-0.08203266215811579"
+      },
+      "id": 73930387
+    },
+    {
+      "cityName": "Valdealgorfa",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-01-13T17:00:48.442Z",
+      "notes": "",
+      "position": {
+        "lat": "41.00089143044165",
+        "lng": "-0.04290159056318244"
+      },
+      "id": 73930388
+    },
+    {
+      "cityName": "Alcaniz",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-01-13T17:01:51.459Z",
+      "notes": "",
+      "position": {
+        "lat": "41.00011415238962",
+        "lng": "-0.05560870365426185"
+      },
+      "id": 73930389
     }
   ]
 }

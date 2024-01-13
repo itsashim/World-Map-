@@ -1,45 +1,100 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 
 const CitiesProvider = createContext();
 
+const initialState = {
+  cities: [],
+  isLoading: false,
+  currentCity: {},
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "true/loading":
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case "false/loading":
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case "cities/loaded":
+      return {
+        ...state,
+        isLoading: false,
+        cities: action.payload,
+      };
+    case "city/loaded":
+      return {
+        ...state,
+        isLoading: false,
+        currentCity: action.payload,
+      };
+    case "city/delete":
+      return {
+        ...state,
+        isLoading: false,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+      };
+    case "city/create":
+      return {
+        ...state,
+        isLoading: false,
+        cities: [...state.cities, action.payload],
+        currentCity: action.payload,
+      };
+    default:
+      throw new Error("unknown type");
+  }
+}
+
 function CitiesContext({ children }) {
-  const [cities, setCitites] = useState([]);
-  const [isLoading, setIsLoading] = useState();
-  const [currentCity, setCurrentCity] = useState({});
+  // const [cities, setCitites] = useState([]);
+  // const [isLoading, setIsLoading] = useState();
+  // const [currentCity, setCurrentCity] = useState({});
+
+  const [{ cities, isLoading, currentCity }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(function () {
     const fetchCities = async function () {
       try {
-        setIsLoading(true);
+        dispatch({ type: "true/loading" });
         const res = await fetch(`http://localhost:7000/cities`);
         const data = await res.json();
-        setCitites(data);
+        dispatch({ type: "cities/loaded", payload: data });
       } catch {
         alert("There was a error loading the date");
       } finally {
-        setIsLoading(false);
+        dispatch({ type: "false/loading" });
       }
     };
     fetchCities();
   }, []);
 
   async function getCity(id) {
+    if (currentCity.id === Number(id)) return;
     try {
-      setIsLoading(true);
+      dispatch({ type: "true/loading" });
       const res = await fetch(`http://localhost:7000/cities/${id}`);
       const data = await res.json();
-      setCurrentCity(data);
+      // setCurrentCity(data);
+      dispatch({ type: "city/loaded", payload: data });
     } catch {
       alert("There was a error loading the date");
     } finally {
-      setIsLoading(false);
+      dispatch({ type: "false/loading" });
     }
   }
 
   async function pushCity(newCity) {
     try {
-      setIsLoading(true);
+      dispatch({ type: "true/loading" });
       const res = await fetch(`http://localhost:7000/cities`, {
         method: "POST",
         body: JSON.stringify(newCity),
@@ -48,26 +103,31 @@ function CitiesContext({ children }) {
         },
       });
       const data = await res.json();
-      setCitites(() => [...cities, data]);
+      dispatch({ type: "city/create", payload: data });
+      // setCitites(() => [...cities, data]);
     } catch {
       alert("Error on adding new city");
     } finally {
-      setIsLoading(false);
+      dispatch({ type: "false/loading" });
     }
   }
 
   async function deleteCity(id) {
     try {
-      setIsLoading(true);
+      dispatch({ type: "true/loading" });
       await fetch(`http://localhost:7000/cities/${id}`, {
         method: "DELETE",
       });
 
-      setCitites(() => cities.filter((city) => city.id !== id));
+      // setCitites(() => cities.filter((city) => city.id !== id));
+      dispatch({
+        type: "city/delete",
+        payload: id,
+      });
     } catch {
       alert("Error on Deleting city");
     } finally {
-      setIsLoading(false);
+      dispatch({ type: "false/loading" });
     }
   }
 
